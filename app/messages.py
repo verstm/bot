@@ -1,6 +1,6 @@
 import os
 import sys
-
+from .funcs import gptask
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -35,6 +35,7 @@ def f(path, name):
     t = None
     with open(path + '/' + fl, 'r', encoding='utf-8') as file:
         t = file.read()
+    t = t.replace("{x}", name)
     pg = Page(name, name, t)
     V[name] = pg
     for i in tmp:
@@ -46,7 +47,5 @@ def f(path, name):
         if os.path.isdir(npath):
             V[i.split('_')[-1]].bind(V[name], "Назад")
 
-
 path = '/'.join(sys.argv[0].split('/')[:-1]) + '/app/content/Главная'
 f(path, 'Главная')
-print(V)
